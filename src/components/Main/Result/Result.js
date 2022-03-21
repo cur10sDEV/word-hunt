@@ -1,12 +1,17 @@
 import React from 'react'
 
-const Result = ({meanings, audio, lang, word}) => {
+const Result = ({theme, meanings, audio, lang, word}) => {
 	return (
-		<div className="results">
+		<div className="results" style={{backgroundColor: theme ? "rgba(35,35,35,1.0)" : "rgba(235, 235, 235, 1.0)"}}>
 			{/*audio element*/}
 			{
 				meanings[0] && word && lang === "en" && (
-						<audio src={audio && `${audio}`} controls style={{borderRadius: "25px", margin: "2rem 1rem 0 1rem", minWidth: "90%", maxWidth: "95%"}}>Your browser doesn't support audio element</audio>
+						<audio src={audio && `${audio}`} controls style={{
+							borderRadius: "25px",
+							margin: "2rem 1rem 0 1rem",
+							minWidth: "90%",
+							maxWidth: "95%",
+						}}>Your browser doesn't support audio element</audio>
 				)
 			}
 
@@ -16,7 +21,10 @@ const Result = ({meanings, audio, lang, word}) => {
 						meanings.map((item,i) => {
 							const {partOfSpeech, definitions, synonyms, antonyms} = item
 							return (
-								<div className="result" key={i}>
+								<div className="result" key={i} style={{
+									background: theme ? "rgba(75, 75, 75, 1.0)" : "rgba(255, 255, 255, 1.0)",
+									boxShadow: "none"
+								}}>
 									{partOfSpeech && <p><b>Part Of Speech: </b>{partOfSpeech}</p>}
 									<hr />
 									{definitions && definitions.map((def,j) => {

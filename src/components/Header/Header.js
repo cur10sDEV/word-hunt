@@ -2,11 +2,11 @@ import React from 'react'
 import ThemeSwitcher from "./ThemeSwitcher/ThemeSwitcher"
 import "./Header.css"
 
-const Header = ({bgColor}) => {
+const Header = ({onChange, theme}) => {
 	return (
-		<div className="header" style={{backgroundColor: `${bgColor}`}}>
+		<div className="header">
 			<h2 className="heading">Word Hunt</h2>
-			<ThemeSwitcher />
+			<ThemeSwitcher theme={theme} onChange={onChange}/>
 		</div>
 	)
 }

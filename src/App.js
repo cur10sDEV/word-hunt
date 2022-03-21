@@ -10,6 +10,7 @@ function App() {
   const [lang, setLang] = useState("en")
   const [meanings, setMeanings] = useState([])
   const [audioSrc, setAudioSrc] = useState(false)
+  const [darkTheme, setDarkTheme] = useState(false)
 
   async function getMeaning(word, lang) {
     try {
@@ -20,7 +21,6 @@ function App() {
       const getAudioSrc = await phonetics[0].audio
       setAudioSrc(getAudioSrc)
       setMeanings(meanings)
-      console.log(word,lang,getAudioSrc,meanings)
     } catch (err) {
       console.log(err)
     }
@@ -30,18 +30,26 @@ function App() {
   }, [word,lang])
 
   return (
-    <div className="App">
-      <Container maxWidth="md" >
-        <Header bgColor=""/>
+    <div className="App" >
+      <Container maxWidth="md" style={{
+      backgroundColor: darkTheme ? "rgba(50,50,50,1.0)": "rgba(252,252,252,1.0)",
+      color: darkTheme ? "#fff" : "#000",
+      paddingTop: ".75rem",
+      transition: "all 0.3s linear"
+    }}>
+        <Header theme={darkTheme} onChange={() => {
+          setDarkTheme((prevValue) => !prevValue)
+        }}/>
         <Main
-           word={word}
-           onChange={(e) => setWord(e.target.value)}
-           lang={lang}
-           handleChange={(e) => setLang(e.target.value)}
-           meanings={meanings}
-           audio={audioSrc}
-         />
-         <Footer />
+          theme={darkTheme}
+          word={word}
+          onChange={(e) => setWord(e.target.value)}
+          lang={lang}
+          handleChange={(e) => setLang(e.target.value)}
+          meanings={meanings}
+          audio={audioSrc}
+        />
+         <Footer theme={darkTheme} />
       </Container>
     </div>
   )
