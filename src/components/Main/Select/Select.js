@@ -1,23 +1,24 @@
 import React from 'react'
-import {FormControl, InputLabel, MenuItem} from "@mui/material"
+import {FormControl, InputLabel, MenuItem, Select} from "@mui/material"
+import categories from "../../data/category.js"
 
-const Select = ({lang, handleChange}) => {
+const SelectList = ({lang, handleChange}) => {
 	return (
 		<FormControl fullWidth>
-		  <InputLabel id="demo-simple-select-label">Age</InputLabel>
+		  <InputLabel id="demo-simple-select-label">Language</InputLabel>
 		  <Select
 		    labelId="demo-simple-select-label"
 		    id="demo-simple-select"
 		    value={lang}
-		    label="Age"
+		    label="Language"
 		    onChange={handleChange}
 		  >
-		    <MenuItem value={10}>Ten</MenuItem>
-		    <MenuItem value={20}>Twenty</MenuItem>
-		    <MenuItem value={30}>Thirty</MenuItem>
+		  	{categories.map((item,i) => (
+		  		<MenuItem key={i} value={item.label}>{item.value}</MenuItem>
+		  	))}
 		  </Select>
 		</FormControl>
 	)
 }
 
-export default Select
+export default SelectList

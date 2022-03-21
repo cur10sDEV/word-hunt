@@ -1,3 +1,20 @@
 .input {
 	margin: 1rem;
 }
+
+.results {
+	background: rgba(235, 235, 235, 1.0);
+	margin: 2rem 0 1rem 0;
+	border-radius: 5px;
+	height: 55vh;
+	overflow-y: scroll;
+	font-size: 1.25rem;
+}
+
+.result {
+	background: rgba(255, 255, 255, 1.0);
+	padding: .5rem 1.25rem;
+	margin: 2rem 1rem;
+	border-radius: 10px;
+	box-shadow: -2px 5px 20px rgba(200, 200, 200, 1.0);
+}

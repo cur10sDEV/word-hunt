@@ -1,19 +1,57 @@
 import React from 'react'
 
-const Result = ({meanings, synonyms, partsOfSpeech, audio}) => {
+const Result = ({meanings, audio, lang, word}) => {
 	return (
 		<div className="results">
-			<h3 className="subtitle">Parts Of Speech: {partsOfSpeech}</h3>
+			{/*audio element*/}
+			{
+				meanings[0] && word && lang === "en" && (
+						<audio src={audio && `${audio}`} controls style={{borderRadius: "25px", margin: "2rem 1rem 0 1rem", minWidth: "90%", maxWidth: "95%"}}>Your browser doesn't support audio element</audio>
+				)
+			}
 
-			<h3 className="subtitle">Meanings</h3>
-			{meanings.map((meaning,i) => {
-				return <p>{i++}: {meaning}</p>
-			})}
-			
-			<h3 className="subtitle">Synonyms</h3>
-			{synonyms.map((synonym,i) => {
-				return <p>{i++}: {synonym}</p>
-			})}
+			{/*meanings,synonyms,partsOfSpeech,antonyms*/}
+				{
+					meanings ? (
+						meanings.map((item,i) => {
+							const {partOfSpeech, definitions, synonyms, antonyms} = item
+							return (
+								<div className="result" key={i}>
+									{partOfSpeech && <p><b>Part Of Speech: </b>{partOfSpeech}</p>}
+									<hr />
+									{definitions && definitions.map((def,j) => {
+										return (
+											<>
+												<p><b>Meaning: </b>{def.definition}</p>
+												<hr />
+												{def.example &&
+													<> 
+														<p><b>Example: </b>{def.example}</p>
+														<hr />
+													</>
+												}
+											</>
+										)
+									})}
+									{
+										synonyms &&
+											<>
+												<p><b>Synonyms: </b>{synonyms.join(", ")}</p>
+												<hr />
+											</>
+									}
+									{
+										antonyms &&
+											<>
+												<p><b>Antonyms: </b>{antonyms.join(", ")}</p>
+												<hr />
+											</>
+									}
+								</div>
+							)
+						})
+					) : <p>{word.length === 0 ? "Search Any word" : "No results found sorry"}</p>
+				}
 		</div>
 	)
 }

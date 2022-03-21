@@ -1,36 +1,47 @@
 import './App.css';
+import {useState, useEffect} from "react"
 import Header from "./components/Header/Header"
+import Footer from "./components/Footer/Footer"
 import Main from "./components/Main/Main"
-import { Container} from '@mui/material';
+import { Container } from '@mui/material';
 
 function App() {
-  async function getMeaning() {
+  const [word, setWord] = useState("hello")
+  const [lang, setLang] = useState("en")
+  const [meanings, setMeanings] = useState([])
+  const [audioSrc, setAudioSrc] = useState(false)
+
+  async function getMeaning(word, lang) {
     try {
-      const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/hello`)
+      const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/${lang}/${word}`)
       const data = await res.json()
       const dataToUse = await data[0]
-      const {word,phonetics, meanings} = await dataToUse;
-      const audioSrc = await phonetics[0].audio
-      console.log(word)
-      console.log(audioSrc)
-      console.log(meanings)
+      const {phonetics, meanings} = await dataToUse;
+      const getAudioSrc = await phonetics[0].audio
+      setAudioSrc(getAudioSrc)
+      setMeanings(meanings)
+      console.log(word,lang,getAudioSrc,meanings)
     } catch (err) {
       console.log(err)
     }
   }
+  useEffect(() => {
+    getMeaning(word,lang)
+  }, [word,lang])
 
-  getMeaning()
   return (
     <div className="App">
-      <Container maxWidth="md">
+      <Container maxWidth="md" >
         <Header bgColor=""/>
-        {/*<Main
-           word="word"
-           onChange={() => {return}}
-           lang="en"
-           handleChange={() => {return}}
-           meanings="meanings"
-         />*/}
+        <Main
+           word={word}
+           onChange={(e) => setWord(e.target.value)}
+           lang={lang}
+           handleChange={(e) => setLang(e.target.value)}
+           meanings={meanings}
+           audio={audioSrc}
+         />
+         <Footer />
       </Container>
     </div>
   )
