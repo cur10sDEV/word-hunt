@@ -12,6 +12,7 @@ const SelectList = ({lang, handleChange}) => {
 		    value={lang}
 		    label="Language"
 		    onChange={handleChange}
+		    color="primary"
 		  >
 		  	{categories.map((item,i) => (
 		  		<MenuItem key={i} value={item.label}>{item.value}</MenuItem>
